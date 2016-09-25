@@ -3,9 +3,10 @@ import java.io.IOException;
 
 
 public class Catalog {
-	File[] catList;
-	File[] fileList;
-	String path;
+	private File[] catList;
+	private File[] fileList;
+	private String path;
+	
 	public Catalog(String _path) throws IOException{
 		
 		path = _path;
