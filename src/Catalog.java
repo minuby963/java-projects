@@ -1,63 +1,54 @@
 import java.io.File;
-import java.io.IOException;
-
 
 public class Catalog {
 	private File[] catList;
 	private File[] fileList;
 	private String path;
 	
-	public Catalog(String _path) throws IOException{
-		
+	public Catalog(String _path) throws Exception{
+		changePath(_path);
+	}
+	
+	public void changePath(String _path) throws Exception{
 		path = _path;
 		//System.out.println(path);
 		File dir = new File(path);		
-		try{	
-			if( !dir.isDirectory() ){
-				throw new IOException("File should be directory.");	
+		if( !dir.isDirectory() ){
+			throw new Exception("File should be directory.");	
+		}
+		else{
+			int i=0;
+			int j=0;
+			for(File f : dir.listFiles()){
+				if(f.isDirectory())
+					i++;
+				else
+					j++;
 			}
-			else{
-				int i=0;
-				int j=0;
-				for(File f : dir.listFiles()){
-					if(f.isDirectory())
-						i++;
-					else
-						j++;
-				}
 				
-				if(i>0)
-					catList = new File[i];
-				if(j>0)
-					fileList = new File[j];
+			if(i>0)
+				catList = new File[i];
+			if(j>0)
+				fileList = new File[j];
 
-				//System.out.println("i: "+i+", j: "+j);
-				i=0;
-				j=0;
-				for(File f : dir.listFiles()){
-					if(f.isDirectory()){
-						catList[i] = f;
-						i++;
-					}
-					else{
-						fileList[j] = f;
-						j++;
-					}
+			//System.out.println("i: "+i+", j: "+j);
+			i=0;
+			j=0;
+			for(File f : dir.listFiles()){
+				if(f.isDirectory()){
+					catList[i] = f;
+					i++;
 				}
-				
-			}
-		}
-		catch(IOException e){
-			System.out.println(e);
-		}
-			
+				else{
+					fileList[j] = f;
+					j++;
+				}
+			}		
+		}			
 	}
 	
 	public void showFiles(){
-		if(fileList==null){
-			
-		}
-		else{
+		if(fileList!=null){
 			for(File file : fileList){
 	            System.out.println(file.getName());
 			}
@@ -65,11 +56,7 @@ public class Catalog {
 	}
 	
 	public void showCatalogs(){
-
-		if(catList==null){
-			
-		}
-		else{
+		if(catList!=null){
 			for(File cat : catList){
             	System.out.println("- "+cat.getName());
 			}
@@ -78,6 +65,42 @@ public class Catalog {
 	
 	public String getPath(){
 		return path;
+	}
+	public String getParentPath() throws Exception {
+		if(!this.hasParent()){
+			throw new Exception("Directory has not parent directory.");
+		}
+		
+		
+		String[] pathParts= path.split("/");
+		String parentPath=pathParts[0]+"/";
+		
+		for(int i=1;i<pathParts.length-1;i++){
+
+			if(i==1){
+				parentPath = parentPath + pathParts[i];
+			}
+			else {
+				parentPath = parentPath + "/" + pathParts[i];
+			}
+
+		}
+		//System.out.print(parentPath);
+		return parentPath;
+	}
+	public void changeToParent() throws Exception{
+		
+		changePath(this.getParentPath());
+		
+	}
+	public boolean hasParent(){
+		String[] pathParts = path.split("/");
+		if(pathParts.length == 1){
+			return false;
+		}
+		else{
+			return true;
+		}
 	}
 	
 }
