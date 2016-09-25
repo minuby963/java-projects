@@ -1,18 +1,22 @@
 import java.io.File;
 
 public class Catalog {
+
+	public static final String MAIN_PATH = "C:/Users/Daniel/Desktop";
+	
 	private File[] catList;
 	private File[] fileList;
 	private String path;
 	
 	public Catalog(String _path) throws Exception{
-		changePath(_path);
+		changeCatalog(_path);
 	}
 	public void checkAndChangeCatalog(String command) throws Exception{
-		if(command.equals("..")){
-			
+		if(command.equals(".")){
+			changeCatalog(MAIN_PATH);	
+		}
+		else if(command.equals("..")){
 			changeToParent();
-			
 		}
 		else{
 			String newPath;
@@ -23,12 +27,12 @@ public class Catalog {
 				newPath = getPath()+command;
 			}
 				
-			changePath(newPath);
+			changeCatalog(newPath);
 			
 		}
 	}
 	
-	public void changePath(String _path) throws Exception{
+	public void changeCatalog(String _path) throws Exception{
 		path = _path;
 		//System.out.println(path);
 		File dir = new File(path);		
@@ -109,7 +113,7 @@ public class Catalog {
 	}
 	public void changeToParent() throws Exception{
 		
-		changePath(this.getParentPath());
+		changeCatalog(this.getParentPath());
 		
 	}
 	public boolean hasParent(){
