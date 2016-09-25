@@ -8,6 +8,25 @@ public class Catalog {
 	public Catalog(String _path) throws Exception{
 		changePath(_path);
 	}
+	public void checkAndChangeCatalog(String command) throws Exception{
+		if(command.equals("..")){
+			
+			changeToParent();
+			
+		}
+		else{
+			String newPath;
+			if(hasParent()){
+				newPath = getPath()+"/"+command;
+			}
+			else{
+				newPath = getPath()+command;
+			}
+				
+			changePath(newPath);
+			
+		}
+	}
 	
 	public void changePath(String _path) throws Exception{
 		path = _path;

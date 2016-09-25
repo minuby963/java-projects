@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -26,37 +25,14 @@ public class FileCommander {
 					
 			}
 			else{
-				
-				if(command.equals("..")){
-					try{
-						dir.changeToParent();
-					}
-					catch(Exception e){
-						System.out.println(e);
-						System.out.println(dir.getPath());
-						dir.showCatalogs();
-						continue;
-					}
+				try{
+					dir.checkAndChangeCatalog(command);
 				}
-				else{
-					
-					try{
-						String newPath;
-						if(dir.hasParent()){
-							newPath = dir.getPath()+"/"+command;
-						}
-						else{
-							newPath = dir.getPath()+command;
-						}
-						
-						dir.changePath(newPath);
-					}
-					catch(IOException e){
-						System.out.println(e);
-						System.out.println(dir.getPath());
-						dir.showCatalogs();
-						continue;
-					}
+				catch(Exception e){
+					System.out.println(e);
+					System.out.println(dir.getPath());
+					dir.showCatalogs();
+					continue;
 				}
 				
 				System.out.println(dir.getPath());
