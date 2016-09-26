@@ -18,15 +18,28 @@ public class FileCommander {
 		
 		while(readCommand.hasNextLine()){
 			
-			String command = readCommand.nextLine();
+			String sCommand = readCommand.nextLine();
 			
-			if(command.substring(0, 1).equals(":")){
-				
-					
+			if(sCommand.substring(0, 1).equals(":")){
+				Command command = new Command(dir);
+				command.execute(sCommand);
+				//:run file 
+				//:show files
+				//:move file to path
+				//:copy file to path
+				//:change name
+				//:select from A to B 
+				//:order by
+
+				//command.run(File f);
+				//command.show(String name);
+				//command.move(File/Files f, String path)
+				//command.copy(File/Files f, String path)
+				//command.changeName(File f, string newName)
 			}
 			else{
 				try{
-					dir.checkAndChangeCatalog(command);
+					dir.checkAndChangeCatalog(sCommand);
 				}
 				catch(Exception e){
 					System.out.println(e);
