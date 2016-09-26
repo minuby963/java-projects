@@ -36,6 +36,7 @@ public class FileCommander {
 				//command.move(File/Files f, String path)
 				//command.copy(File/Files f, String path)
 				//command.changeName(File f, string newName)
+				
 			}
 			else{
 				try{

@@ -8,6 +8,7 @@ public class Command {
 	
 	public void execute(String command){
 		String[] commandParts = command.split(" ");
+		
 	}
 
 }
