@@ -16,12 +16,13 @@ public class Command {
 				this.show(commandParts[1]);
 				break;
 			case "runprogram": 
-				this.runFile(commandParts[1]);
+				this.runProgram(commandParts[1]);
 				break;
 			case "run-program": 
-				this.runFile(commandParts[1]);
+				this.runProgram(commandParts[1]);
 				break;
 			default:
+				
 				throw new Exception("Unrecognized command: "+mainCommand);		
 		}
 	}
@@ -35,7 +36,7 @@ public class Command {
 		}
 	}
 	
-	public void runFile(String name) throws IOException{
+	public void runProgram(String name) throws IOException{
 		String path = dir.getPath() + "/" + name;
 		System.out.println(path);
 		Runtime.getRuntime().exec(path);
