@@ -12,29 +12,38 @@ public class Command {
 	public void execute(String command) throws Exception{
 		String[] commandParts = command.split(" ");
 		String mainCommand = commandParts[0].substring(1);
+		if(commandParts.length<=1){
+			throw new Exception("Not enough arguments.");
+		}
+		String parameters = commandParts[1];
+		for(int i=2;i<commandParts.length;i++){
+			parameters = parameters + " " + commandParts[i];
+		}
 		
 		switch(mainCommand.toLowerCase()){
 			case "show":
-				this.show(commandParts[1]);
+				this.show(parameters);
 				break;
 			case "runprogram": 
-				this.runProgram(commandParts[1]);
+				this.runProgram(parameters);
 				break;
 			case "run-program": 
-				this.runProgram(commandParts[1]);
+				this.runProgram(parameters);
 				break;
 			case "rename": 
-				this.rename(commandParts[1]);
+				this.rename(parameters);
 				break;
 			default:
-				
 				throw new Exception("Unrecognized command: "+mainCommand);		
 		}
 	}
 	
 	public void show(String name) throws Exception{
-		if(name.equals("files")){
+		if(name.toLowerCase().equals("files")){
 			dir.showFiles();
+		}
+		else if(name.toLowerCase().equals("catalogs")){
+			//dir.showCatalogs(); //   ---   IN MAIN   ---   //
 		}
 		else{
 			throw new Exception(":show : Unrecognized name: "+name);
@@ -55,13 +64,15 @@ public class Command {
 		File file = new File(path);
 		if (file.exists()){
 			Scanner readCommand = new Scanner(System.in);
-			
+
+			System.out.println("Enter new file name:");
 			while(readCommand.hasNextLine()){
 				
 				String newName = readCommand.nextLine();
-				File newFile = new File(newName);
+				File newFile = new File(dir.getPath() + "/" + newName);
 				if(newFile.exists()){
 					System.out.println("File: "+newName+" alredy exists.");
+					System.out.println("Enter new file name:");
 					continue;
 				}
 				else{
@@ -71,6 +82,7 @@ public class Command {
 					if (!success) {
 					   throw new Exception("File can not be renamed.");
 					}
+					System.out.println("aaa");
 					break;
 				}
 			}

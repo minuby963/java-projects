@@ -17,7 +17,8 @@ public class FileCommander {
 		dir.showCatalogs();
 		
 		while(readCommand.hasNextLine()){
-			
+			System.out.println("aaa2");
+
 			String sCommand = readCommand.nextLine();
 			
 			if(sCommand.substring(0, 1).equals(":")){
@@ -62,10 +63,9 @@ public class FileCommander {
 					dir.showCatalogs();
 					continue;
 				}
-				
-				System.out.println(dir.getPath());
-				dir.showCatalogs();
 			}
+			System.out.println(dir.getPath());
+			dir.showCatalogs();
 
 		}
 		readCommand.close();
