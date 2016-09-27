@@ -35,11 +35,12 @@ public class FileCommander {
 					continue;
 				}
 				//:exit --
-				//:run file 
-				//:show files
+				//:run program --
+				//:show files --
+				//:change name
 				//:move file to path
 				//:copy file to path
-				//:change name
+
 				//:select from A to B 
 				//:order by
 

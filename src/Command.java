@@ -1,4 +1,6 @@
+import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Command {
 	private Catalog dir;
@@ -21,6 +23,9 @@ public class Command {
 			case "run-program": 
 				this.runProgram(commandParts[1]);
 				break;
+			case "rename": 
+				this.rename(commandParts[1]);
+				break;
 			default:
 				
 				throw new Exception("Unrecognized command: "+mainCommand);		
@@ -38,8 +43,44 @@ public class Command {
 	
 	public void runProgram(String name) throws IOException{
 		String path = dir.getPath() + "/" + name;
-		System.out.println(path);
+		//System.out.println(path);
 		Runtime.getRuntime().exec(path);
+	}
+	
+	public void rename(String name) throws Exception{
+		String path = dir.getPath() + "/" + name;
+		System.out.println(path);
+		
+		// File (or directory) with old name
+		File file = new File(path);
+		if (file.exists()){
+			Scanner readCommand = new Scanner(System.in);
+			
+			while(readCommand.hasNextLine()){
+				
+				String newName = readCommand.nextLine();
+				File newFile = new File(newName);
+				if(newFile.exists()){
+					System.out.println("File: "+newName+" alredy exists.");
+					continue;
+				}
+				else{
+					
+					readCommand.close();
+					boolean success = file.renameTo(newFile);
+					if (!success) {
+					   throw new Exception("File can not be renamed.");
+					}
+					break;
+				}
+			}
+		}
+		else{
+			throw new Exception("File do not exists.");
+		}
+
+		
+	
 	}
 
 }

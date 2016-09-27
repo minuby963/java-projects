@@ -8,6 +8,9 @@ public class Catalog {
 	private File[] fileList;
 	private String path;
 	
+	public Catalog() throws Exception{
+		changeCatalog(MAIN_PATH);
+	}
 	public Catalog(String _path) throws Exception{
 		changeCatalog(_path);
 	}
