@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class Command {
 	private Catalog dir;
 	
-	public Command(Catalog _dir){
-		dir=_dir;
+	public Command(Catalog _dir) throws Exception{
+		dir = new Catalog(_dir);
 	}
 	
 	public void execute(String command) throws Exception{
@@ -29,6 +29,7 @@ public class Command {
 				break;
 			case "run-program": 
 				this.runProgram(parameters);
+				System.out.println("ccc");
 				break;
 			case "rename": 
 				this.rename(parameters);
@@ -60,15 +61,18 @@ public class Command {
 		String path = dir.getPath() + "/" + name;
 		System.out.println(path);
 		
-		// File (or directory) with old name
 		File file = new File(path);
 		if (file.exists()){
-			Scanner readCommand = new Scanner(System.in);
-
-			System.out.println("Enter new file name:");
-			while(readCommand.hasNextLine()){
+			Scanner readNewCommand = new Scanner(System.in);
+			
+			System.out.println("Enter new file name1:");
+//			int i=0;
+			while(readNewCommand.hasNextLine()){
+				System.out.println("readNewCommand: " + readNewCommand.hasNextLine());
 				
-				String newName = readCommand.nextLine();
+//				i++;
+				String newName = readNewCommand.nextLine();
+				
 				File newFile = new File(dir.getPath() + "/" + newName);
 				if(newFile.exists()){
 					System.out.println("File: "+newName+" alredy exists.");
@@ -77,15 +81,16 @@ public class Command {
 				}
 				else{
 					
-					readCommand.close();
+					readNewCommand.close();
+					System.out.println("readNewCommand closed");
 					boolean success = file.renameTo(newFile);
 					if (!success) {
 					   throw new Exception("File can not be renamed.");
 					}
-					System.out.println("aaa");
 					break;
 				}
 			}
+			System.out.println("end of while");
 		}
 		else{
 			throw new Exception("File do not exists.");

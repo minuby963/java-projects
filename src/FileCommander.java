@@ -3,24 +3,34 @@ import java.util.Scanner;
 
 public class FileCommander {
 
-	public static final String MAIN_PATH = "C:/Users/Daniel/Desktop"; 
+//	public static final String MAIN_PATH = "C:/Users/Daniel/Desktop"; 
 	//public static final String MAIN_PATH = "C:/"; 
 	
 	public static void main(String[] args) throws InterruptedException, Exception {
 		
-		Catalog dir = new Catalog(MAIN_PATH);
-		
-		dir.hasParent();
-		
+		Catalog dir = new Catalog();//MAIN_PATH);
+				
 		Scanner readCommand = new Scanner(System.in);
+		
 		System.out.println(dir.getPath());
 		dir.showCatalogs();
-		
-		while(readCommand.hasNextLine()){
-			System.out.println("aaa2");
 
-			String sCommand = readCommand.nextLine();
-			
+		
+		boolean check = false;
+		
+		
+		System.out.println("readCommand1: " + readCommand.hasNextLine());
+		while(readCommand.hasNext()){		
+						
+			System.out.println("readCommand1: " + readCommand.hasNextLine());
+			String sCommand;
+			if(check){
+				sCommand = readCommand.next();
+			}
+			else{
+				sCommand = readCommand.nextLine();
+				
+			}
 			if(sCommand.substring(0, 1).equals(":")){
 				if(sCommand.substring(1).equals("exit")){
 					break;
@@ -28,6 +38,10 @@ public class FileCommander {
 				Command command = new Command(dir);
 				try{
 					command.execute(sCommand);
+					System.out.println("exit");
+					System.out.println("readCommand2: " + readCommand.hasNextLine());
+					check=true;
+					continue;
 				}
 				catch(Exception e){
 					System.out.println(e);
@@ -64,10 +78,11 @@ public class FileCommander {
 					continue;
 				}
 			}
-			System.out.println(dir.getPath());
-			dir.showCatalogs();
+//			System.out.println(dir.getPath());
+//			dir.showCatalogs();
 
 		}
+		System.out.println("End of main while");
 		readCommand.close();
 	
 	}
